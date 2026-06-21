@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(MSVC)
-    target_compile_options(kmeans PRIVATE /utf-8)
+    add_compile_options(/utf-8)
 endif()
 
 set(SRCS kmeans.hpp kmeans.cpp)
