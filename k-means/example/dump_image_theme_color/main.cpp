@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <algorithm>
 #include <iostream>
 #include <string>
 
@@ -68,13 +69,16 @@ int main(int argc, char* argv[])
 
     constexpr size_t     k = 5;
     constexpr size_t     totalEpoch = 100;
-    constexpr double     esp = 0.01;
-    constexpr KMeansFlag flag = KMEANS_RANDOM_CENTER;
+    constexpr double     esp = 1e-6;
+    constexpr KMeansFlag flag = KMEANS_PP_CENTER;
     auto result = kmeans(datas, k, flag, totalEpoch, esp, &kmeansCallback, nullptr);
 
     auto clusters = createClusters(datas, result);
 
     // 输出图像主题色
+    std::sort(
+        clusters.begin(), clusters.end(), [](const Cluster& lhs, const Cluster& rhs) -> bool
+        { return lhs.datas.size() > rhs.datas.size(); });
     for (const auto& cluster : clusters)
     {
         const auto& center = cluster.center;
