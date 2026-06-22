@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
     constexpr size_t     k = 5;
     constexpr size_t     totalEpoch = 100;
     constexpr double     esp = 1e-6;
-    constexpr KMeansFlag flag = KMEANS_PP_CENTER;
+    constexpr KMeansFlag flag = KMEANS_RANDOM_CENTER;
     auto result = kmeans(datas, k, flag, totalEpoch, esp, &kmeansCallback, nullptr);
 
     auto clusters = createClusters(datas, result);
