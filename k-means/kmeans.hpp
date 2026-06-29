@@ -1,5 +1,5 @@
-#ifndef KMEANS_HPP
-#define KMEANS_HPP
+#ifndef JCALGO_KMEANS_HPP
+#define JCALGO_KMEANS_HPP
 
 #include <cstddef>
 #include <cmath>
@@ -136,4 +136,4 @@ double calinskiHarabaszScore(const ClusterList& clusters);
 
 } // namespace jcalgo
 
-#endif // !KMEANS_HPP
+#endif // !JCALGO_KMEANS_HPP
