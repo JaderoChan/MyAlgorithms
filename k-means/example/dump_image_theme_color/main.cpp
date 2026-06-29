@@ -16,7 +16,7 @@ void kmeansCallback(
     (void) stop;
     (void) userdata;
 
-    printf("轮数 [%zu/%zu]  全局中心偏移量 %lf\n", currentEpoch, totalEpoch, globalCenterDelta);
+    printf("Epoch: [%zu/%zu] Global center delta: %lf\n", currentEpoch, totalEpoch, globalCenterDelta);
 }
 
 DoubleVectorList ucharToDoubleVectorList(
@@ -43,7 +43,7 @@ DoubleVectorList ucharToDoubleVectorList(
 int main(int argc, char* argv[])
 {
     std::string filepath;
-    printf("输入图像文件路径：\n");
+    printf("Please input the image filepath:\n");
     std::cin >> filepath;
 
     // 读取图像数据
