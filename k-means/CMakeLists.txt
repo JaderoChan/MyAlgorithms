@@ -10,7 +10,6 @@ endif()
 
 set(SRCS kmeans.hpp kmeans.cpp)
 add_library(${PROJECT_NAME} STATIC ${SRCS})
-
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_subdirectory(example)

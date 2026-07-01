@@ -8,7 +8,7 @@
 
 using namespace jcalgo::kmeans;
 
-void kmeansCallback(
+static void kmeansCallback(
     size_t currentEpoch, size_t totalEpoch, double globalCenterDelta,
     const KMeansResult& result, bool& stop, void* userdata)
 {
@@ -19,7 +19,7 @@ void kmeansCallback(
     printf("Epoch: [%zu/%zu] Global center delta: %lf\n", currentEpoch, totalEpoch, globalCenterDelta);
 }
 
-DoubleVectorList ucharToDoubleVectorList(
+static DoubleVectorList ucharToDoubleVectorList(
     const unsigned char* data, int width, int height, int channels)
 {
     const size_t pixels = (size_t) width * (size_t) height;
