@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <ctime>
+#include <algorithm>
 #include <iostream>
 #include <random>
 #include <string>
@@ -43,6 +44,20 @@ static std::vector<int> generateRandomNums(size_t count, int min, int max)
     return nums;
 }
 
+static bool isEqualNums(const std::vector<int>& nums1, const std::vector<int>& nums2)
+{
+    if (nums1.size() != nums2.size())
+        return false;
+
+    const size_t n = nums1.size();
+    for (size_t i = 0; i < n; ++i)
+    {
+        if (nums1[i] != nums2[i])
+            return false;
+    }
+    return true;
+}
+
 template <typename T>
 static std::ostream& operator<<(std::ostream& os, const std::vector<T>& arr)
 {
@@ -65,48 +80,110 @@ static std::ostream& operator<<(std::ostream& os, const std::vector<T>& arr)
 
 JCALGO_DEFINE_BUBBLE_SORT(int, JCALGO_DEFAULT_LESS_THAN)
 JCALGO_DEFINE_SELECT_SORT(int, JCALGO_DEFAULT_LESS_THAN)
+JCALGO_DEFINE_INSERT_SORT(int, JCALGO_DEFAULT_LESS_THAN)
+JCALGO_DEFINE_SHELL_SORT(int, JCALGO_DEFAULT_LESS_THAN)
 JCALGO_DEFINE_QUICK_SORT(int, JCALGO_DEFAULT_LESS_THAN)
 
 int main(int argc, char* argv[])
 {
-    constexpr size_t n = 1000000;
+    constexpr size_t n = 10000;
+    constexpr bool isLogNums = false;
     const std::vector<int> originNums = generateRandomNums(n, -10000, 10000);
-    // std::cout << "------------------------------\n";
-    // std::cout << "Origin Nums:\n------------------------------\n" << originNums << std::endl;
+    if (isLogNums)
+    {
+        std::cout << "------------------------------\n";
+        std::cout << "Origin Nums:\n------------------------------\n" << originNums << "\n";
+        std::cout << std::endl;
+    }
+
+    std::vector<int> sortedNums = originNums;
+    std::sort(sortedNums.begin(), sortedNums.end());
 
     ElapsedTimer et;
 
     // Bubble sort
+    if (true)
     {
         std::vector<int> nums = originNums;
         et.restart();
         jcalgo_bubble_sort_int(nums.data(), n);
         double elapsed = et.elapsedSec();
-        // std::cout << "------------------------------\n";
-        // std::cout << "Bubble sorted nums:\n------------------------------\n" << nums << std::endl;
-        std::cout << "[Bubble sort elapsed: " << elapsed << "]" << std::endl;
+        if (isLogNums)
+        {
+            std::cout << "------------------------------\n";
+            std::cout << "Bubble sorted nums:\n------------------------------\n" << nums << "\n";
+        }
+        std::cout << "[Bubble sort elapsed: " << elapsed << "]\n";
+        std::cout << "[" << (isEqualNums(nums, sortedNums) ? "Correct" : "Uncorrect") << "]\n";
+        std::cout << std::endl;
     }
 
     // Select sort
+    if (true)
     {
         std::vector<int> nums = originNums;
         et.restart();
         jcalgo_select_sort_int(nums.data(), n);
         double elapsed = et.elapsedSec();
-        // std::cout << "------------------------------\n";
-        // std::cout << "Select sorted nums:\n------------------------------\n" << nums << std::endl;
-        std::cout << "[Select sort elapsed: " << elapsed << "]" << std::endl;
+        if (isLogNums)
+        {
+            std::cout << "------------------------------\n";
+            std::cout << "Select sorted nums:\n------------------------------\n" << nums << "\n";
+        }
+        std::cout << "[Select sort elapsed: " << elapsed << "]\n";
+        std::cout << "[" << (isEqualNums(nums, sortedNums) ? "Correct" : "Uncorrect") << "]\n";
+        std::cout << std::endl;
+    }
+
+    // Insert sort
+    if (true)
+    {
+        std::vector<int> nums = originNums;
+        et.restart();
+        jcalgo_insert_sort_int(nums.data(), n);
+        double elapsed = et.elapsedSec();
+        if (isLogNums)
+        {
+            std::cout << "------------------------------\n";
+            std::cout << "Insert sorted nums:\n------------------------------\n" << nums << "\n";
+        }
+        std::cout << "[Insert sort elapsed: " << elapsed << "]\n";
+        std::cout << "[" << (isEqualNums(nums, sortedNums) ? "Correct" : "Uncorrect") << "]\n";
+        std::cout << std::endl;
+    }
+
+    // Shell sort
+    if (true)
+    {
+        std::vector<int> nums = originNums;
+        et.restart();
+        jcalgo_shell_sort_int(nums.data(), n);
+        double elapsed = et.elapsedSec();
+        if (isLogNums)
+        {
+            std::cout << "------------------------------\n";
+            std::cout << "Shell sorted nums:\n------------------------------\n" << nums << "\n";
+        }
+        std::cout << "[Shell sort elapsed: " << elapsed << "]\n";
+        std::cout << "[" << (isEqualNums(nums, sortedNums) ? "Correct" : "Uncorrect") << "]\n";
+        std::cout << std::endl;
     }
 
     // Quick sort
+    if (true)
     {
         std::vector<int> nums = originNums;
         et.restart();
         jcalgo_quick_sort_int(nums.data(), n);
         double elapsed = et.elapsedSec();
-        // std::cout << "------------------------------\n";
-        // std::cout << "Quick sorted nums:\n------------------------------\n" << nums << std::endl;
-        std::cout << "[Quick sort elapsed: " << elapsed << "]" << std::endl;
+        if (isLogNums)
+        {
+            std::cout << "------------------------------\n";
+            std::cout << "Quick sorted nums:\n------------------------------\n" << nums << "\n";
+        }
+        std::cout << "[Quick sort elapsed: " << elapsed << "]\n";
+        std::cout << "[" << (isEqualNums(nums, sortedNums) ? "Correct" : "Uncorrect") << "]\n";
+        std::cout << std::endl;
     }
 
     return 0;

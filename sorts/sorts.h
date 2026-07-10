@@ -7,7 +7,7 @@
 
 /** @brief 冒泡排序 */
 #define JCALGO_DEFINE_BUBBLE_SORT(T, COMP)                                      \
-void jcalgo_bubble_sort_##T(T* arr, size_t n)                                   \
+void jcalgo_bubble_sort_##T(T *arr, size_t n)                                   \
 {                                                                               \
     if (n < 2)                                                                  \
         return;                                                                 \
@@ -32,7 +32,7 @@ void jcalgo_bubble_sort_##T(T* arr, size_t n)                                   
 
 /** @brief 选择排序 */
 #define JCALGO_DEFINE_SELECT_SORT(T, COMP)                                      \
-void jcalgo_select_sort_##T(T* arr, size_t n)                                   \
+void jcalgo_select_sort_##T(T *arr, size_t n)                                   \
 {                                                                               \
     if (n < 2)                                                                  \
         return;                                                                 \
@@ -52,13 +52,72 @@ void jcalgo_select_sort_##T(T* arr, size_t n)                                   
     }                                                                           \
 }
 
+/** @brief 插入排序 */
+#define JCALGO_DEFINE_INSERT_SORT(T, COMP)                                      \
+void jcalgo_insert_sort_##T(T *arr, size_t n)                                   \
+{                                                                               \
+    if (n < 2)                                                                  \
+        return;                                                                 \
+                                                                                \
+    for (size_t i = 1; i < n; ++i)                                              \
+    {                                                                           \
+        size_t flag = i;                                                        \
+        for (size_t j = i - 1; j >= 0;)                                         \
+        {                                                                       \
+            if (!COMP(arr[flag], arr[j]))                                       \
+                break;                                                          \
+                                                                                \
+            const T tmp = arr[flag];                                            \
+            arr[flag]   = arr[j];                                               \
+            arr[j]      = tmp;                                                  \
+            --flag;                                                             \
+                                                                                \
+            if (j == 0) break;                                                  \
+            else        --j;                                                    \
+        }                                                                       \
+    }                                                                           \
+}
+
 /** @brief 希尔排序 */
+#define JCALGO_DEFINE_SHELL_SORT(T, COMP)                                       \
+void jcalgo_shell_sort_##T(T *arr, size_t n)                                    \
+{                                                                               \
+    if (n < 2)                                                                  \
+        return;                                                                 \
+                                                                                \
+    size_t gap = n / 2;                                                         \
+    while (gap)                                                                 \
+    {                                                                           \
+        for (size_t g = 0; g < gap; ++g)                                        \
+        {                                                                       \
+            for (size_t i = g + gap; i < n; i += gap)                           \
+            {                                                                   \
+                size_t flag = i;                                                \
+                for (size_t j = i - gap; j >= 0;)                               \
+                {                                                               \
+                    if (!COMP(arr[flag], arr[j]))                               \
+                        break;                                                  \
+                                                                                \
+                    const T tmp = arr[flag];                                    \
+                    arr[flag]   = arr[j];                                       \
+                    arr[j]      = tmp;                                          \
+                    flag -= gap;                                                \
+                                                                                \
+                    if (j == g) break;                                          \
+                    else        j -= gap;                                       \
+                }                                                               \
+            }                                                                   \
+        }                                                                       \
+                                                                                \
+        gap /= 2;                                                               \
+    }                                                                           \
+}
 
 /** @brief 归并排序 */
 
 /** @brief 快速排序 */
 #define JCALGO_DEFINE_QUICK_SORT(T, COMP)                                       \
-void jcalgo_quick_sort_##T(T* arr, size_t n)                                    \
+void jcalgo_quick_sort_##T(T *arr, size_t n)                                    \
 {                                                                               \
     if (n < 2)                                                                  \
         return;                                                                 \
