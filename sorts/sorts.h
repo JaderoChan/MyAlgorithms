@@ -127,8 +127,8 @@ void jcalgo_quick_sort_##T(T *arr, size_t n)                                    
                                                                                 \
     while (i <= j)                                                              \
     {                                                                           \
-        while (i < n && COMP(arr[i], pivot)) ++i;                               \
-        while (j > 0 && COMP(pivot, arr[j])) --j;                               \
+        while (i < n && COMP(arr[i], pivot))  ++i;                              \
+        while (j > 0 && COMP(pivot,  arr[j])) --j;                              \
         if (i <= j)                                                             \
         {                                                                       \
             const T tmp = arr[i];                                               \
