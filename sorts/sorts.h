@@ -4,7 +4,9 @@
 #include <stddef.h> // size_t
 #include <stdlib.h> // malloc, free
 
-#define JCALGO_DEFAULT_LESS_THAN(a, b) ((a) < (b))
+#ifndef JCALGO_LESS_THAN
+    #define JCALGO_LESS_THAN(a, b) ((a) < (b))
+#endif // !JCALGO_LESS_THAN
 
 /** @brief 冒泡排序 */
 #define JCALGO_DEFINE_BUBBLE_SORT(T, COMP)                                      \
