@@ -88,9 +88,9 @@ JCALGO_DEFINE_QUICK_SORT(int, JCALGO_DEFAULT_LESS_THAN)
 int main(int argc, char* argv[])
 {
     constexpr size_t n = 10000;
-    constexpr bool isLogNums = false;
+    constexpr bool printNums = false;
     const std::vector<int> originNums = generateRandomNums(n, -10000, 10000);
-    if (isLogNums)
+    if (printNums)
     {
         std::cout << "------------------------------\n";
         std::cout << "Origin Nums:\n------------------------------\n" << originNums << "\n";
@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
         et.restart();
         jcalgo_bubble_sort_int(nums.data(), n);
         double elapsed = et.elapsedSec();
-        if (isLogNums)
+        if (printNums)
         {
             std::cout << "------------------------------\n";
             std::cout << "Bubble sorted nums:\n------------------------------\n" << nums << "\n";
@@ -126,7 +126,7 @@ int main(int argc, char* argv[])
         et.restart();
         jcalgo_select_sort_int(nums.data(), n);
         double elapsed = et.elapsedSec();
-        if (isLogNums)
+        if (printNums)
         {
             std::cout << "------------------------------\n";
             std::cout << "Select sorted nums:\n------------------------------\n" << nums << "\n";
@@ -143,7 +143,7 @@ int main(int argc, char* argv[])
         et.restart();
         jcalgo_insert_sort_int(nums.data(), n);
         double elapsed = et.elapsedSec();
-        if (isLogNums)
+        if (printNums)
         {
             std::cout << "------------------------------\n";
             std::cout << "Insert sorted nums:\n------------------------------\n" << nums << "\n";
@@ -160,7 +160,7 @@ int main(int argc, char* argv[])
         et.restart();
         jcalgo_shell_sort_int(nums.data(), n);
         double elapsed = et.elapsedSec();
-        if (isLogNums)
+        if (printNums)
         {
             std::cout << "------------------------------\n";
             std::cout << "Shell sorted nums:\n------------------------------\n" << nums << "\n";
@@ -177,7 +177,7 @@ int main(int argc, char* argv[])
         et.restart();
         jcalgo_merge_sort_int(nums.data(), n);
         double elapsed = et.elapsedSec();
-        if (isLogNums)
+        if (printNums)
         {
             std::cout << "------------------------------\n";
             std::cout << "Merge sorted nums:\n------------------------------\n" << nums << "\n";
@@ -194,7 +194,7 @@ int main(int argc, char* argv[])
         et.restart();
         jcalgo_quick_sort_int(nums.data(), n);
         double elapsed = et.elapsedSec();
-        if (isLogNums)
+        if (printNums)
         {
             std::cout << "------------------------------\n";
             std::cout << "Quick sorted nums:\n------------------------------\n" << nums << "\n";
