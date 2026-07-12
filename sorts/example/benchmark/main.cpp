@@ -82,6 +82,7 @@ JCALGO_DEFINE_BUBBLE_SORT(int, JCALGO_DEFAULT_LESS_THAN)
 JCALGO_DEFINE_SELECT_SORT(int, JCALGO_DEFAULT_LESS_THAN)
 JCALGO_DEFINE_INSERT_SORT(int, JCALGO_DEFAULT_LESS_THAN)
 JCALGO_DEFINE_SHELL_SORT(int, JCALGO_DEFAULT_LESS_THAN)
+JCALGO_DEFINE_MERGE_SORT(int, JCALGO_DEFAULT_LESS_THAN)
 JCALGO_DEFINE_QUICK_SORT(int, JCALGO_DEFAULT_LESS_THAN)
 
 int main(int argc, char* argv[])
@@ -165,6 +166,23 @@ int main(int argc, char* argv[])
             std::cout << "Shell sorted nums:\n------------------------------\n" << nums << "\n";
         }
         std::cout << "[Shell sort elapsed: " << elapsed << "]\n";
+        std::cout << "[" << (isEqualNums(nums, sortedNums) ? "Correct" : "Uncorrect") << "]\n";
+        std::cout << std::endl;
+    }
+
+    // Merge sort
+    if (true)
+    {
+        std::vector<int> nums = originNums;
+        et.restart();
+        jcalgo_merge_sort_int(nums.data(), n);
+        double elapsed = et.elapsedSec();
+        if (isLogNums)
+        {
+            std::cout << "------------------------------\n";
+            std::cout << "Merge sorted nums:\n------------------------------\n" << nums << "\n";
+        }
+        std::cout << "[Merge sort elapsed: " << elapsed << "]\n";
         std::cout << "[" << (isEqualNums(nums, sortedNums) ? "Correct" : "Uncorrect") << "]\n";
         std::cout << std::endl;
     }

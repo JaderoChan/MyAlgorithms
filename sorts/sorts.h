@@ -1,7 +1,8 @@
 #ifndef JCALGO_SORTS_H
 #define JCALGO_SORTS_H
 
-#include <stddef.h>
+#include <stddef.h> // size_t
+#include <stdlib.h> // malloc, free
 
 #define JCALGO_DEFAULT_LESS_THAN(a, b) ((a) < (b))
 
@@ -114,6 +115,39 @@ void jcalgo_shell_sort_##T(T *arr, size_t n)                                    
 }
 
 /** @brief 归并排序 */
+#define JCALGO_DEFINE_MERGE_SORT(T, COMP)                                       \
+void _jcalgo_merge_sort_impl_##T(T *arr, T *tmp, size_t n)                      \
+{                                                                               \
+    if (n < 2)                                                                  \
+        return;                                                                 \
+                                                                                \
+    size_t mid = n / 2;                                                         \
+    _jcalgo_merge_sort_impl_##T(arr,       tmp, mid);                           \
+    _jcalgo_merge_sort_impl_##T(arr + mid, tmp, n - mid);                       \
+                                                                                \
+    size_t i = 0, j = mid, k = 0;                                               \
+    while (i < mid && j < n)                                                    \
+    {                                                                           \
+        if (COMP(arr[j], arr[i])) tmp[k++] = arr[j++];                          \
+        else                      tmp[k++] = arr[i++];                          \
+    }                                                                           \
+    while (i < mid) tmp[k++] = arr[i++];                                        \
+    while (j < n)   tmp[k++] = arr[j++];                                        \
+    for (size_t m = 0; m < n; ++m) arr[m] = tmp[m];                             \
+}                                                                               \
+                                                                                \
+void jcalgo_merge_sort_##T(T *arr, size_t n)                                    \
+{                                                                               \
+    if (n < 2)                                                                  \
+        return;                                                                 \
+                                                                                \
+    T *tmp = (T *)malloc(n * sizeof(T));                                        \
+    if (!tmp)                                                                   \
+        return;                                                                 \
+                                                                                \
+    _jcalgo_merge_sort_impl_##T(arr, tmp, n);                                   \
+    free(tmp);                                                                  \
+}
 
 /** @brief 快速排序 */
 #define JCALGO_DEFINE_QUICK_SORT(T, COMP)                                       \
