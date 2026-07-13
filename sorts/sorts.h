@@ -172,11 +172,41 @@ void jcalgo_quick_sort_##T(T *arr, size_t n)                                    
 }
 
 /** @brief 堆排序 */
-
-/** @brief 计数排序 */
-
-/** @brief 桶排序 */
-
-/** @brief 基数排序 */
+#define JCALGO_DEFINE_HEAP_SORT(T, COMP)                                        \
+void _jcalgo_heap_sort_sift_down_##T(T *arr, size_t n, size_t i)                \
+{                                                                               \
+    while (true)                                                                \
+    {                                                                           \
+        const size_t l = 2 * i + 1;                                             \
+        const size_t r = 2 * i + 2;                                             \
+        size_t flag = i;                                                        \
+        if (l < n && !COMP(arr[l], arr[flag])) flag = l;                        \
+        if (r < n && !COMP(arr[r], arr[flag])) flag = r;                        \
+        if (flag == i) break;                                                   \
+        _JCALGO_SWAP(T, arr[i], arr[flag]);                                     \
+        i = flag;                                                               \
+    }                                                                           \
+}                                                                               \
+                                                                                \
+void jcalgo_heap_sort_##T(T *arr, size_t n)                                     \
+{                                                                               \
+    if (n < 2)                                                                  \
+        return;                                                                 \
+                                                                                \
+    for (size_t i = (n - 1) / 2; i >= 0;)                                       \
+    {                                                                           \
+        _jcalgo_heap_sort_sift_down_##T(arr, n, i);                             \
+        if (i > 0) --i;                                                         \
+        else       break;                                                       \
+    }                                                                           \
+                                                                                \
+    for (size_t i = n - 1; i > 0;)                                              \
+    {                                                                           \
+        _JCALGO_SWAP(T, arr[0], arr[i]);                                        \
+        _jcalgo_heap_sort_sift_down_##T(arr, i, 0);                             \
+        if (i > 0) --i;                                                         \
+        else       break;                                                       \
+    }                                                                           \
+}
 
 #endif // !JCALGO_SORTS_H
