@@ -8,6 +8,10 @@
     #define JCALGO_LESS_THAN(a, b) ((a) < (b))
 #endif // !JCALGO_LESS_THAN
 
+#ifndef _JCALGO_SWAP
+    #define _JCALGO_SWAP(T, a, b) do { const T t = (a); (a) = (b); (b) = t; } while(0)
+#endif // !_JCALGO_SWAP
+
 /** @brief 冒泡排序 */
 #define JCALGO_DEFINE_BUBBLE_SORT(T, COMP)                                      \
 void jcalgo_bubble_sort_##T(T *arr, size_t n)                                   \
@@ -24,10 +28,8 @@ void jcalgo_bubble_sort_##T(T *arr, size_t n)                                   
         {                                                                       \
             if (COMP(arr[i + 1], arr[i]))                                       \
             {                                                                   \
-                const T tmp = arr[i];                                           \
-                arr[i]      = arr[i + 1];                                       \
-                arr[i + 1]  = tmp;                                              \
-                has_swap    = 1;                                                \
+                _JCALGO_SWAP(T, arr[i], arr[i + 1]);                            \
+                has_swap = 1;                                                   \
             }                                                                   \
         }                                                                       \
     }                                                                           \
@@ -48,10 +50,7 @@ void jcalgo_select_sort_##T(T *arr, size_t n)                                   
             if (COMP(arr[j], arr[flag]))                                        \
                 flag = j;                                                       \
         }                                                                       \
-                                                                                \
-        const T tmp = arr[i];                                                   \
-        arr[i]      = arr[flag];                                                \
-        arr[flag]   = tmp;                                                      \
+        _JCALGO_SWAP(T, arr[i], arr[flag]);                                     \
     }                                                                           \
 }
 
@@ -70,13 +69,10 @@ void jcalgo_insert_sort_##T(T *arr, size_t n)                                   
             if (!COMP(arr[flag], arr[j]))                                       \
                 break;                                                          \
                                                                                 \
-            const T tmp = arr[flag];                                            \
-            arr[flag]   = arr[j];                                               \
-            arr[j]      = tmp;                                                  \
+            _JCALGO_SWAP(T, arr[j], arr[flag]);                                 \
             --flag;                                                             \
-                                                                                \
-            if (j == 0) break;                                                  \
-            else        --j;                                                    \
+            if (j > 0) --j;                                                     \
+            else       break;                                                   \
         }                                                                       \
     }                                                                           \
 }
@@ -101,13 +97,10 @@ void jcalgo_shell_sort_##T(T *arr, size_t n)                                    
                     if (!COMP(arr[flag], arr[j]))                               \
                         break;                                                  \
                                                                                 \
-                    const T tmp = arr[flag];                                    \
-                    arr[flag]   = arr[j];                                       \
-                    arr[j]      = tmp;                                          \
+                    _JCALGO_SWAP(T, arr[j], arr[flag]);                         \
                     flag -= gap;                                                \
-                                                                                \
-                    if (j == g) break;                                          \
-                    else        j -= gap;                                       \
+                    if (j > g) j -= gap;                                        \
+                    else       break;                                           \
                 }                                                               \
             }                                                                   \
         }                                                                       \
@@ -167,9 +160,7 @@ void jcalgo_quick_sort_##T(T *arr, size_t n)                                    
         while (j > 0 && COMP(pivot,  arr[j])) --j;                              \
         if (i <= j)                                                             \
         {                                                                       \
-            const T tmp = arr[i];                                               \
-            arr[i]      = arr[j];                                               \
-            arr[j]      = tmp;                                                  \
+            _JCALGO_SWAP(T, arr[i], arr[j]);                                    \
             ++i;                                                                \
             if (j > 0) --j;                                                     \
             else       break;                                                   \
