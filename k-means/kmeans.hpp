@@ -1,7 +1,7 @@
 #ifndef JCALGO_KMEANS_HPP
 #define JCALGO_KMEANS_HPP
 
-#include <cstddef>
+#include <stddef.h>
 #include <cmath>
 #include <stdexcept>
 #include <vector>
