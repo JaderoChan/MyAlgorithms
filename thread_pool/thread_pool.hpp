@@ -20,7 +20,9 @@
 #include <vector>
 
 #ifdef _MSC_VER
-    #error "MSVC is unsupported."
+    #define _THREADPOOL_CPPVERSION _MSVC_LANG
+#else
+    #define _THREADPOOL_CPPVERSION __cplusplus
 #endif
 
 /**
@@ -38,9 +40,9 @@ public:
     /** @brief 提交一个任务至队列中。 */
     template<typename F, typename... Args>
     // result_of 在 C++17 中被标记为弃用并在 C++20 中彻底移除。在 C++17 及以上版本中使用 invoke_result_t 替代 result_of。
-#if __cplusplus >= 201703L
+#if _THREADPOOL_CPPVERSION >= 201703L
     std::future<std::invoke_result_t<F, Args...>> submit(F&& f, Args&&... args);
-#elif __cplusplus >= 201103L
+#elif _THREADPOOL_CPPVERSION >= 201103L
     std::future<typename std::result_of<F(Args...)>::type> submit(F&& f, Args&&... args);
 #else
     #error "At least C++11 is necessary."
@@ -67,7 +69,7 @@ private:
 };
 
 template<typename F, typename ...Args>
-#if __cplusplus >= 201703L
+#if _THREADPOOL_CPPVERSION >= 201703L
 inline std::future<std::invoke_result_t<F, Args...>> ThreadPool::submit(F&& f, Args&&... args)
 {
     using ReturnType = std::invoke_result_t<F, Args...>;
@@ -85,7 +87,7 @@ inline std::future<std::invoke_result_t<F, Args...>> ThreadPool::submit(F&& f, A
     stopOrNotEmptyCv_.notify_one();
     return fut;
 }
-#elif __cplusplus >= 201103L
+#elif _THREADPOOL_CPPVERSION >= 201103L
 inline std::future<typename std::result_of<F(Args...)>::type> ThreadPool::submit(F&& f, Args && ...args)
 {
     using ReturnType = typename std::result_of<F(Args...)>::type;
@@ -106,5 +108,7 @@ inline std::future<typename std::result_of<F(Args...)>::type> ThreadPool::submit
 #else
     #error "At least C++11 is necessary."
 #endif
+
+#undef _THREADPOOL_CPPVERSION
 
 #endif // !THREAD_POOL_HPP
