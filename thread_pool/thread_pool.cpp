@@ -1,9 +1,9 @@
 #include "thread_pool.hpp"
 
-ThreadPool::ThreadPool(std::size_t threadNum)
+ThreadPool::ThreadPool(std::size_t numThreads)
     : stop_(false), unfinished_(0)
 {
-    for (std::size_t i = 0; i < threadNum; ++i)
+    for (std::size_t i = 0; i < numThreads; ++i)
         workers_.emplace_back(&ThreadPool::work, this);
 }
 
